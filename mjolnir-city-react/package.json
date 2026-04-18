@@ -1,0 +1,23 @@
+{
+  "name": "mjolnir-city",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Mjolnir City - Viking-themed real-time sensor dashboard (React frontend).",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.1",
+    "react": "^18.3.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0"
+  }
+}

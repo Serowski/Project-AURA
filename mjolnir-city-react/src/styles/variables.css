@@ -1,0 +1,41 @@
+/* ===========================================================
+   Design tokens — Viking dark theme
+   =========================================================== */
+:root {
+  /* surfaces */
+  --bg-0: #05070d;
+  --bg-1: #0b111c;
+  --bg-2: #11192a;
+  --bg-3: #151f33;
+
+  /* lines */
+  --line:   #1e2a42;
+  --line-2: #26324c;
+
+  /* text */
+  --text:      #e6e9ef;
+  --text-dim:  #8b95ab;
+  --text-xdim: #5d6780;
+
+  /* accents */
+  --gold:        #d6a85c;
+  --gold-strong: #e7ba66;
+  --amber:       #f0c277;
+  --bronze:      #a16b36;
+  --teal:        #4fb8b0;
+  --teal-dim:    #2d7d78;
+  --ember:       #e06a3a;
+  --frost:       #7fb6d9;
+  --violet:      #8779d6;
+  --danger:      #e3594d;
+  --ok:          #4fb889;
+
+  /* layout */
+  --sidebar-w: 260px;
+  --topbar-h:  72px;
+
+  /* radii */
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 8px;
+}
