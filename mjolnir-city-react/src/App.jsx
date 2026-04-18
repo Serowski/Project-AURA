@@ -1,5 +1,4 @@
 import TopBar from './components/layout/TopBar.jsx';
-import Sidebar from './components/layout/Sidebar.jsx';
 import SectionTabs from './components/common/SectionTabs.jsx';
 import AlertTicker from './components/common/AlertTicker.jsx';
 import PageHeader from './components/panels/PageHeader.jsx';
@@ -17,7 +16,6 @@ export default function App() {
   return (
     <div className="app">
       <TopBar />
-      <Sidebar />
 
       <main className="main">
         <AlertTicker alert={alertTicker} />
