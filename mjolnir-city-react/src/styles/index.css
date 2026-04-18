@@ -747,6 +747,81 @@ a { color: inherit; }
 .chart-panel { min-height: 320px; }
 .chart-full  { grid-column: 1 / -1; }
 .chart-wrap  { position: relative; height: 260px; }
+.chart-wrap--tall { height: 340px; }
+
+/* ── TripleLineChart ─────────────────────────────────────────── */
+.triple-chart { display: flex; flex-direction: column; height: 100%; }
+
+.triple-chart__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.triple-chart__windows {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+.triple-chart__win-btn {
+  padding: 6px 12px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: inherit;
+  font-weight: 600;
+  transition: .2s;
+}
+.triple-chart__win-btn:hover { color: var(--text); }
+.triple-chart__win-btn--active {
+  color: var(--gold-strong);
+  background: linear-gradient(180deg, #1a2540, #131c31);
+  border-color: var(--line-2);
+  box-shadow: inset 0 1px 0 rgba(214,168,92,.15);
+}
+
+.triple-chart__count {
+  font-size: 11px;
+  color: var(--text-xdim);
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.triple-chart__canvas {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+}
+
+.triple-chart__empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-xdim);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.triple-chart__empty-icon {
+  font-size: 36px;
+  opacity: .4;
+  animation: pulse 2s ease-in-out infinite;
+}
 
 /* ============================================================
    MAP TAB

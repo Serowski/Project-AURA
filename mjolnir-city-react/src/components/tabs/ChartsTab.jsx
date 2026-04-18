@@ -1,26 +1,57 @@
 import Panel from '../common/Panel.jsx';
-import DragonChart from '../charts/DragonChart.jsx';
-import AirChart from '../charts/AirChart.jsx';
-import ForgeChart from '../charts/ForgeChart.jsx';
-import EchoChart from '../charts/EchoChart.jsx';
+import TripleLineChart from '../charts/TripleLineChart.jsx';
 import AtmoChart from '../charts/AtmoChart.jsx';
+import { useSensors } from '../../context/SensorsContext.jsx';
 
-/** Wykresy — historical + distribution charts. */
+/**
+ * Charts tab — 4 sensor analysis charts (raw vs Kalman vs AI risk)
+ * + atmospheric composition chart.
+ */
 export default function ChartsTab() {
+  const { connected } = useSensors();
+
   return (
     <div className="charts-grid">
-      <Panel title="Dragon Breath — historia 24h" className="chart-panel">
-        <div className="chart-wrap"><DragonChart /></div>
+      <Panel
+        title="🌡️ Temperatura — Raw vs Kalman vs AI Risk"
+        subtitle={connected ? '● Live' : '○ Offline'}
+        className="chart-panel"
+      >
+        <div className="chart-wrap chart-wrap--tall">
+          <TripleLineChart metric="temp" />
+        </div>
       </Panel>
-      <Panel title="Spirit of Air — jakość" className="chart-panel">
-        <div className="chart-wrap"><AirChart /></div>
+
+      <Panel
+        title="💧 Wilgotność — Raw vs Kalman vs AI Risk"
+        subtitle={connected ? '● Live' : '○ Offline'}
+        className="chart-panel"
+      >
+        <div className="chart-wrap chart-wrap--tall">
+          <TripleLineChart metric="humidity" />
+        </div>
       </Panel>
-      <Panel title="Forge Energy — obciążenie serca kuźni" className="chart-panel chart-full">
-        <div className="chart-wrap"><ForgeChart /></div>
+
+      <Panel
+        title="☀️ Światło — Raw vs Kalman vs AI Risk"
+        subtitle={connected ? '● Live' : '○ Offline'}
+        className="chart-panel"
+      >
+        <div className="chart-wrap chart-wrap--tall">
+          <TripleLineChart metric="light" />
+        </div>
       </Panel>
-      <Panel title="Echoes of Midgard — rozkład" className="chart-panel">
-        <div className="chart-wrap"><EchoChart /></div>
+
+      <Panel
+        title="📏 Dystans — Raw vs Kalman vs AI Risk"
+        subtitle={connected ? '● Live' : '○ Offline'}
+        className="chart-panel"
+      >
+        <div className="chart-wrap chart-wrap--tall">
+          <TripleLineChart metric="dist" />
+        </div>
       </Panel>
+
       <Panel title="Skład atmosferyczny" className="chart-panel">
         <div className="chart-wrap"><AtmoChart /></div>
       </Panel>

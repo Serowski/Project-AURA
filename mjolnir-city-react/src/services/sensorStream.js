@@ -9,7 +9,9 @@
  * endpoint is available.
  */
 
-const WS_URL = import.meta.env.VITE_SENSORS_WS_URL || 'ws://localhost:8001/ws/sensors/stream';
+const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+const defaultWsUrl = `${protocol}//${window.location.host}/ws/sensors/stream`;
+const WS_URL = import.meta.env.VITE_SENSORS_WS_URL || defaultWsUrl;
 
 export function openSensorStream({ onMessage, onError, onClose } = {}) {
   const ws = new WebSocket(WS_URL);

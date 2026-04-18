@@ -14,7 +14,7 @@ import paho.mqtt.client as mqtt
 BROKER = os.getenv("MQTT_BROKER", "localhost")
 PORT = int(os.getenv("MQTT_PORT", 1883))
 # Subskrybujemy oba topiki — wildcard łapie wszystko
-TOPICS = os.getenv("MQTT_TOPICS", "nrf54/data,mlottora/data").split(",")
+TOPICS = os.getenv("MQTT_TOPICS", "nrf54/data,mlottora/data,mlottora/final,mlottora/raw").split(",")
 CLIENT_ID = os.getenv("MQTT_CLIENT_ID", f"subscriber-{random.randint(1000, 9999)}")
 
 
