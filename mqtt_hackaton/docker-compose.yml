@@ -29,7 +29,7 @@ services:
     environment:
       - MQTT_BROKER=mosquitto
       - MQTT_PORT=1883
-      - MQTT_TOPICS=nrf54/data,mlottora/data
+      - MQTT_TOPICS=mlottora/data,mlottora/raw,mlottora/#
     depends_on:
       - mosquitto
     restart: unless-stopped
