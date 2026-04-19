@@ -17,7 +17,6 @@ class AIAnomalyDetector:
         self.model = IsolationForest(contamination=0.15, n_estimators=100)
         self.history = []
         self.is_model_ready = False
-        # Wagi dla mV [dist, temp, light, hum, press]
         self.weights = np.array([1.0, 1.0, 0.01, 1.0, 1.0])
         self.archetypes = {
             "FIRE":           np.array([200, 80, 2500, 10, 980]),
@@ -61,8 +60,7 @@ class AIAnomalyDetector:
             risk = round(max(0.0, min(100.0, (0.15 - score) * 200)), 1)
         except:
             risk = 0.0
-        
-        # Risk level logic
+    
         if risk < 30: lvl = "LOW"
         elif risk < 65: lvl = "MEDIUM"
         else: lvl = "HIGH"
@@ -76,12 +74,11 @@ class AIAnomalyDetector:
             d = p.get('filtered', {})
             
             risk_pct, risk_lvl, stat, dis = self.predict_risk(d)
-            
-            # FINAL PAYLOAD - All info included
+
             final = {
                 "ts": p.get('ts', time.time()),
                 "device": p.get('device', 'unknown'),
-                "metrics": d,  # DANE Z SENSORÓW TU SĄ
+                "metrics": d,  
                 "analysis": {
                     "risk_percent": f"{risk_pct}%",
                     "risk_level": risk_lvl,
@@ -91,7 +88,6 @@ class AIAnomalyDetector:
                 }
             }
             self.client.publish("sensors/final", json.dumps(final))
-            # print(f"DEBUG OUT >>> Risk: {risk_pct}% | Disaster: {dis}", flush=True)
             
         except Exception as e:
             logger.error(f"AI Error: {e}")
