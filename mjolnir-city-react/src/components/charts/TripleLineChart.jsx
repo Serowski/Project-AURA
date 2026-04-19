@@ -1,15 +1,4 @@
-/**
- * TripleLineChart — displays 3 functions on one chart:
- *   🔴 Raw sensor data
- *   🔵 Kalman-filtered data
- *   🟢 AI Risk Score
- *
- * Supports two modes:
- *   - "live"    → data from WebSocket buffer (SensorsContext.chartData)
- *   - "history" → data fetched from Django REST API
- *
- * Uses dual Y-axis: left = metric value, right = risk score (0–100).
- */
+
 
 import { useEffect, useState, useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -20,10 +9,10 @@ import { fetchSensorHistory } from '../../services/api.js';
 const WINDOWS = ['live', '5m', '15m', '1h', '6h', '24h'];
 
 const METRIC_CONFIG = {
-  temp:     { label: 'Temperatura',  unit: '°C',  icon: '🌡️', color: COLORS.gold,   bg: COLORS.goldGlass },
-  humidity: { label: 'Wilgotność',   unit: '%',   icon: '💧', color: COLORS.teal,   bg: 'rgba(79,184,176,.08)' },
-  light:    { label: 'Światło',      unit: 'lux', icon: '☀️', color: COLORS.frost,  bg: 'rgba(127,182,217,.08)' },
-  dist:     { label: 'Dystans',      unit: 'cm',  icon: '📏', color: COLORS.violet, bg: 'rgba(135,121,214,.08)' },
+  temp: { label: 'Temperatura', unit: '°C', icon: '🌡️', color: COLORS.gold, bg: COLORS.goldGlass },
+  humidity: { label: 'Wilgotność', unit: '%', icon: '💧', color: COLORS.teal, bg: 'rgba(79,184,176,.08)' },
+  light: { label: 'Światło', unit: 'lux', icon: '☀️', color: COLORS.frost, bg: 'rgba(127,182,217,.08)' },
+  dist: { label: 'Dystans', unit: 'cm', icon: '📏', color: COLORS.violet, bg: 'rgba(135,121,214,.08)' },
 };
 
 export default function TripleLineChart({ metric = 'temp' }) {
@@ -55,7 +44,7 @@ export default function TripleLineChart({ metric = 'temp' }) {
       const now = Date.now();
       let baseVal = metric === 'temp' ? 22 : metric === 'humidity' ? 45 : 50;
       if (metric === 'dist') baseVal = 120;
-      
+
       const fakePts = Array.from({ length: totalPts }).map((_, i) => {
         const timeAgo = (totalPts - 1 - i) * stepMinutes * 60000;
         const v = baseVal + Math.sin(i / 6) * (baseVal * 0.2) + (Math.random() - 0.5) * (baseVal * 0.1);
@@ -65,7 +54,7 @@ export default function TripleLineChart({ metric = 'temp' }) {
           risk_score: (v > baseVal * 1.15) ? 60 + Math.random() * 20 : 0,
         };
       });
-      
+
       setHistoryPoints(fakePts);
       setLoading(false);
     }, 400);

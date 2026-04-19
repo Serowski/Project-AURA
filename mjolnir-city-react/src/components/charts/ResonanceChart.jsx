@@ -5,18 +5,17 @@ import { useSensors } from '../../context/SensorsContext.jsx';
 export default function ResonanceChart() {
   const { kpi } = useSensors();
 
-  // Proste ułożenie danych na wspólnej skali 0-100 żeby wykres ładnie wyglądał
   const t = Math.min(100, Math.max(0, ((kpi.dragon || 0) * 2.5))); 
-  const h = Math.min(100, Math.max(0, kpi.air || 0));
-  const l = Math.min(100, Math.max(0, (kpi.forge || 0) / 15));
-  const d = Math.min(100, Math.max(0, kpi.echo || 0));
+  const l = Math.min(100, Math.max(0, (kpi.forge || 0) / 15)); // Światło
+  // Odwracamy odległość: 0 cm -> ryzyko 100, 250+ cm -> ryzyko 0
+  const d = Math.max(0, 100 - ((kpi.echo || 0) * 0.4));
 
   const data = {
-    labels: ['Temperatura', 'Wilgotność', 'Światło', 'Odległość'],
+    labels: ['Temperatura', 'Światło', 'Odległość'],
     datasets: [
       {
         label: 'AURA Profil Sieci Live',
-        data: [t, h, l, d],
+        data: [t, l, d],
         backgroundColor: COLORS.tealSoft,
         borderColor: COLORS.teal,
         borderWidth: 2,
@@ -27,7 +26,7 @@ export default function ResonanceChart() {
       },
       {
         label: 'Baza Krytyczna',
-        data: [75, 75, 75, 75],
+        data: [75, 75, 75],
         backgroundColor: 'rgba(227, 89, 77, 0.05)',
         borderColor: COLORS.ember,
         borderWidth: 1,

@@ -1,6 +1,5 @@
 import { useSensors } from '../../context/SensorsContext.jsx';
 import DragonBreathCard from '../cards/DragonBreathCard.jsx';
-import SpiritOfAirCard from '../cards/SpiritOfAirCard.jsx';
 import EchoesCard from '../cards/EchoesCard.jsx';
 import ForgeEnergyCard from '../cards/ForgeEnergyCard.jsx';
 import SensorCard from '../cards/SensorCard.jsx';
@@ -17,7 +16,6 @@ export default function SensorsTab() {
     <>
       <div className="cards-grid">
         <DragonBreathCard value={kpi.dragon} />
-        <SpiritOfAirCard  value={kpi.air} />
         <EchoesCard       value={kpi.echo} />
         <ForgeEnergyCard  value={kpi.forge} />
       </div>

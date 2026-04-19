@@ -23,16 +23,6 @@ export default function ChartsTab() {
       </Panel>
 
       <Panel
-        title="💧 Wilgotność"
-        subtitle={connected ? '● Live' : '○ Offline'}
-        className="chart-panel"
-      >
-        <div className="chart-wrap chart-wrap--tall">
-          <TripleLineChart metric="humidity" />
-        </div>
-      </Panel>
-
-      <Panel
         title="☀️ Światło "
         subtitle={connected ? '● Live' : '○ Offline'}
         className="chart-panel"
