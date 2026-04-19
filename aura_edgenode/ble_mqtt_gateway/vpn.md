@@ -1,0 +1,1 @@
+FOR APP TO WORK PROPERLY ADD DIRECTORY AND PROVIDE CONFIG FILE FOR YPUR OPENVPN CONNECTION /aura_edgenode/ble_mqtt_gateway/vpn_config/yourfile.ovpn
