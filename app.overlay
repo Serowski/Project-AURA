@@ -1,0 +1,85 @@
+/ {
+	chosen {
+		zephyr,console = &uart30;
+		zephyr,shell-uart = &uart30;
+		zephyr,uart-mcumgr = &uart30;
+		zephyr,bt-mon-uart = &uart30;
+		zephyr,bt-c2h-uart = &uart30;
+	};
+
+	zephyr,user {
+		trig-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
+		echo-gpios = <&gpio1 12 GPIO_ACTIVE_HIGH>;
+		io-channels = <&adc 0>;
+	};
+
+	/* Buzzer pasywny */
+	pwm_buzzer_node {
+		compatible = "pwm-leds";
+		pwm_buzz: pwm_buzz {
+			pwms = <&pwm20 0 PWM_MSEC(1) PWM_POLARITY_NORMAL>;
+			label = "BUZZER";
+		};
+	};
+
+	aliases {
+		buzzer = &pwm_buzz;
+	};
+};
+
+&temp {
+	status = "okay";
+};
+
+&uart20 {
+	status = "disabled";
+};
+
+&uart30 {
+	status = "okay";
+};
+
+&adc {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	channel@0 {
+		reg = <0>;
+		zephyr,gain = "ADC_GAIN_1_4";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,input-positive = <NRF_SAADC_AIN0>; /* P1.04 */
+		zephyr,resolution = <14>;
+	};
+};
+
+&i2c21 {
+	status = "disabled";
+};
+
+&spi22 {
+	status = "disabled";
+};
+
+&pwm20 {
+	status = "okay";
+	pinctrl-0 = <&pwm20_default>;
+	pinctrl-1 = <&pwm20_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&pinctrl {
+	pwm20_default: pwm20_default {
+		group1 {
+			psels = <NRF_PSEL(PWM_OUT0, 1, 10)>;
+		};
+	};
+
+	pwm20_sleep: pwm20_sleep {
+		group1 {
+			psels = <NRF_PSEL(PWM_OUT0, 1, 10)>;
+			low-power-enable;
+		};
+	};
+};

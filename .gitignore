@@ -1,0 +1,21 @@
+# Ignoruj wszystko domyślnie
+/*
+
+# Wyjątki - te pliki i foldery zostaną w repozytorium
+!/src/
+!/src/main.c
+!/prj.conf
+!/app.overlay
+!/CMakeLists.txt
+!/.gitignore
+!/README.md
+
+# Ignoruj pliki tymczasowe wewnątrz src (jeśli istnieją)
+/src/*.o
+/src/*.d
+
+# Ignoruj foldery budowania i środowiska
+/build/
+/venv/
+/.vscode/
+/path/
