@@ -3,10 +3,7 @@ import TripleLineChart from '../charts/TripleLineChart.jsx';
 import ResonanceChart from '../charts/ResonanceChart.jsx';
 import { useSensors } from '../../context/SensorsContext.jsx';
 
-/**
- * Charts tab — 4 sensor analysis charts (raw vs Kalman vs AI risk)
- * + atmospheric composition chart.
- */
+
 export default function ChartsTab() {
   const { connected } = useSensors();
 

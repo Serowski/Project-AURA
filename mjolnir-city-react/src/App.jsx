@@ -8,7 +8,6 @@ import MapTab from './components/tabs/MapTab.jsx';
 import { useSensors } from './context/SensorsContext.jsx';
 import { classifyFrost } from './utils/thresholdCheck.js';
 
-// Register Chart.js once at startup.
 import './components/charts/chartTheme.js';
 
 export default function App() {

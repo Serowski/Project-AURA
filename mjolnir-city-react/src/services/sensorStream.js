@@ -1,13 +1,3 @@
-/**
- * WebSocket adapter for the live sensor stream (FastAPI).
- *
- * This is currently NOT used (the demo uses useSensorSimulation),
- * but the shape is ready so the context can swap it in by changing
- * a single line.
- *
- * TODO(backend): wire this into SensorsContext once the FastAPI
- * endpoint is available.
- */
 
 const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
 const defaultWsUrl = `${protocol}//${window.location.host}/ws/sensors/stream`;

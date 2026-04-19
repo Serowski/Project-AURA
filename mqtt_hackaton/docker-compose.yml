@@ -1,7 +1,6 @@
 version: "3.8"
 
 services:
-  # ── MQTT Broker ──────────────────────────────────────────────
   mosquitto:
     image: eclipse-mosquitto:2.0
     container_name: mqtt-broker
@@ -16,7 +15,7 @@ services:
     networks:
       - mqtt-network
 
-  # ── PostgreSQL ───────────────────────────────────────────────
+
   postgres:
     image: postgres:16-alpine
     container_name: aura-postgres
@@ -33,7 +32,7 @@ services:
     networks:
       - mqtt-network
 
-  # ── FastAPI — MQTT → WebSocket bridge + DB writer ────────────
+
   fastapi:
     build:
       context: ../backend/fastapi_service
@@ -53,7 +52,6 @@ services:
     networks:
       - mqtt-network
 
-  # ── Django — REST API + Admin panel ──────────────────────────
   django:
     build:
       context: ../backend/django_service
@@ -75,7 +73,6 @@ services:
     networks:
       - mqtt-network
 
-  # ── Subscriber (debug tool — opcjonalnie) ────────────────────
   subscriber:
     build:
       context: .
@@ -92,7 +89,6 @@ services:
     networks:
       - mqtt-network
 
-  # ── Frontend (React/Vite podany stacjonarnie przez Nginx) ────
   frontend:
     build:
       context: ../mjolnir-city-react

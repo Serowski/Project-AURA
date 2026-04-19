@@ -1,4 +1,4 @@
-/** "Mjölnir City Central Hub" header. */
+
 export default function PageHeader() {
   return (
     <header className="page-head">

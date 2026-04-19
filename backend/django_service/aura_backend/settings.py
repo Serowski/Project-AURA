@@ -13,7 +13,6 @@ DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() in ("true", "1", "yes")
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
-# ── Applications ────────────────────────────────────────────
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -60,7 +59,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "aura_backend.wsgi.application"
 
-# ── Database — shared PostgreSQL ────────────────────────────
 
 DATABASES = {
     "default": {
@@ -73,7 +71,6 @@ DATABASES = {
     }
 }
 
-# ── REST Framework ──────────────────────────────────────────
 
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
@@ -84,16 +81,14 @@ REST_FRAMEWORK = {
     ],
 }
 
-# ── CORS ────────────────────────────────────────────────────
+
 
 CORS_ALLOW_ALL_ORIGINS = True  # TODO: restrict in production
 
-# ── Static files ────────────────────────────────────────────
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# ── Internationalization ────────────────────────────────────
 
 LANGUAGE_CODE = "pl"
 TIME_ZONE = "Europe/Warsaw"

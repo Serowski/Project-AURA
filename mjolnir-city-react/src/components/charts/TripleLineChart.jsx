@@ -24,7 +24,6 @@ export default function TripleLineChart({ metric = 'temp' }) {
 
   const config = METRIC_CONFIG[metric];
 
-  // Pobieranie / symulowanie historii do okien czasowych
   useEffect(() => {
     if (window === 'live' || window === '5m' || window === '15m') {
       setHistoryPoints(null);
@@ -34,7 +33,6 @@ export default function TripleLineChart({ metric = 'temp' }) {
     let cancelled = false;
     setLoading(true);
 
-    // Mockowanie danych historycznych, by zachować płynność UI (omijamy braki w backendzie!)
     setTimeout(() => {
       if (cancelled) return;
       let stepMinutes = 1;
@@ -63,7 +61,7 @@ export default function TripleLineChart({ metric = 'temp' }) {
     return () => { cancelled = true; };
   }, [metric, window]);
 
-  // Rozstrzygnięcie skali w zależności od przycisku (bez obciążania backendu)
+
   const liveArr = chartData[metric] || [];
   let points = [];
   if (window === 'live') {
@@ -76,7 +74,7 @@ export default function TripleLineChart({ metric = 'temp' }) {
     points = historyPoints || [];
   }
 
-  // Memoize chart data to avoid re-renders
+
   const data = useMemo(() => {
     const labels = points.map((p) => {
       if (!p.ts) return '';

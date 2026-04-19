@@ -8,7 +8,6 @@ import RuneLogFeed from '../panels/RuneLogFeed.jsx';
 import ForgeWisdom from '../panels/ForgeWisdom.jsx';
 import Panel from '../common/Panel.jsx';
 
-/** Main "Sensory" tab — full dashboard. */
 export default function SensorsTab() {
   const { kpi, extra } = useSensors();
 

@@ -2,7 +2,7 @@ import MetricCard from './MetricCard.jsx';
 import { DistanceIcon } from '../common/icons.jsx';
 import { classifyKpi } from '../../utils/thresholdCheck.js';
 
-const MAX_DIST_CM = 400; // sensible upper bound for ultrasonic sensor
+const MAX_DIST_CM = 400; 
 
 export default function EchoesCard({ value }) {
   const badge = classifyKpi('dist', value);

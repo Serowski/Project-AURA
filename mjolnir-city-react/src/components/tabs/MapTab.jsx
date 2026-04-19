@@ -1,7 +1,6 @@
 import Panel from '../common/Panel.jsx';
 import CityMap from '../charts/CityMap.jsx';
 
-/** "Mapa" — strategic city map tab. */
 export default function MapTab() {
   return (
     <Panel

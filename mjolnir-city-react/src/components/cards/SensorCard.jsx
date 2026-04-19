@@ -2,11 +2,7 @@ import Badge from '../common/Badge.jsx';
 import Shield from '../pixelart/Shield.jsx';
 import { mapRange, clamp } from '../../utils/fluctuate.js';
 
-/**
- * Card used in the extended sensor grid (6 Viking sensors).
- * A small pixel-art shield sits in the bottom-right corner as
- * a sector marker.
- */
+
 export default function SensorCard({ sensor }) {
   const pct = clamp(Math.round(mapRange(sensor.val, sensor.min, sensor.max, 0, 100)), 4, 100);
   return (

@@ -11,7 +11,6 @@ from datetime import datetime, timezone
 
 import paho.mqtt.client as mqtt
 
-# ── Konfiguracja z ENV ────────────────────────────────────────
 BROKER = os.getenv("MQTT_BROKER", "localhost")
 PORT = int(os.getenv("MQTT_PORT", 1883))
 INTERVAL = int(os.getenv("PUBLISH_INTERVAL", 3))
@@ -34,13 +33,11 @@ def generate_messages() -> dict:
     ts = datetime.now(timezone.utc).timestamp()
     device = "MockAmulet_01"
     
-    # Bazowe odczyty
     temp = round(random.uniform(18.0, 35.0), 2)
     humidity = round(random.uniform(30.0, 80.0), 2)
     light = round(random.uniform(200.0, 800.0), 2)
     dist = round(random.uniform(50.0, 200.0), 2)
     
-    # Warstwa 1: Raw msg
     raw = {
         "ts": ts,
         "device": device,
@@ -52,7 +49,6 @@ def generate_messages() -> dict:
         }
     }
     
-    # Warstwa 2: Filtered msg (lekko wygładzone)
     filtered = {
         "ts": ts,
         "device": device,
@@ -64,7 +60,6 @@ def generate_messages() -> dict:
         }
     }
     
-    # Warstwa 3: Final / Z modelem AI
     risk_value = random.uniform(0.0, 100.0)
     if risk_value > 80:
         status, level = "CRITICAL", "HIGH"

@@ -2,10 +2,7 @@ import { useEffect, useRef } from 'react';
 import Panel from '../common/Panel.jsx';
 import { useSensors } from '../../context/SensorsContext.jsx';
 
-/**
- * "Heatmap of City Gates" — stylised terrain drawn on canvas.
- * Re-renders whenever `gate` changes.
- */
+
 export default function HeatmapPanel() {
   const { gate, selectGate } = useSensors();
   const canvasRef = useRef(null);

@@ -2,15 +2,8 @@ import { useCallback, useRef, useState } from 'react';
 import { ALARM_COOLDOWN_MS } from '../config/thresholds.js';
 import { postAlarm } from '../services/api.js';
 
-/**
- * Alarm manager.
- *
- * - Deduplicates repeated alarms within ALARM_COOLDOWN_MS.
- * - Feeds both the top alert-ticker and the rune-log.
- * - Auto-hides the ticker after 6 seconds.
- */
 export function useAlarms({ onLog } = {}) {
-  const [ticker, setTicker] = useState(null); // { text, tag } | null
+  const [ticker, setTicker] = useState(null); 
   const cooldownRef = useRef({});
   const hideTimerRef = useRef(null);
 
@@ -22,7 +15,7 @@ export function useAlarms({ onLog } = {}) {
     setTicker({ text, tag });
     onLog?.({ body: text, tag, variant: 'danger' });
 
-    // Report to backend (fire-and-forget).
+    
     postAlarm({ id, text, tag, at: new Date().toISOString() }).catch(() => {});
 
     if (hideTimerRef.current) clearTimeout(hideTimerRef.current);

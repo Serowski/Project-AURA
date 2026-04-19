@@ -14,7 +14,7 @@ export default function AtmosphericComposition() {
     <Panel title="Atmospheric Composition">
       {ROWS.map(({ key, label, variant }) => {
         const v = atmo[key] ?? 0;
-        // "Other Runes" is tiny — boost its bar visually for readability.
+      
         const barWidth = key === 'runes' ? Math.max(2, v * 20) : v;
         return (
           <div key={key}>

@@ -1,6 +1,4 @@
-/**
- * Mock data for the CityMap component.
- */
+
 
 export const CITY_MAP_SPOTS = [
   { x: 0.25, y: 0.35, glow: 35, color: '#4CAF50', label: 'West Gate' },

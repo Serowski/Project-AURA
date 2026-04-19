@@ -2,9 +2,7 @@ import Panel from '../common/Panel.jsx';
 import { SparklesIcon } from '../common/icons.jsx';
 import { useWisdomRotator } from '../../hooks/useWisdomRotator.js';
 
-/**
- * Rotating Viking proverb panel flanked by two tung-tung images.
- */
+
 export default function ForgeWisdom() {
   const { quote, fade } = useWisdomRotator();
 

@@ -6,15 +6,7 @@ import { useRuneLog } from '../hooks/useRuneLog.js';
 import { useAlarms } from '../hooks/useAlarms.js';
 import { classifyKpi } from '../utils/thresholdCheck.js';
 
-/**
- * Single source of truth for:
- *   - Live sensor data (via WebSocket from FastAPI)
- *   - KPI values mapped from filtered data
- *   - Chart time-series buffers (raw, filtered, risk per metric)
- *   - Rune-log feed + alarms
- *   - Selected gate (West/East)
- *   - Active top-level tab (sensors/charts/map)
- */
+
 
 const SensorsCtx = createContext(null);
 
@@ -31,7 +23,6 @@ export function SensorsProvider({ children }) {
   const [activeTab, setActiveTab] = useState('sensors');
   const [connected, setConnected] = useState(false);
 
-  // Time-series buffers for 4 charts — each holds arrays of { ts, raw, filtered, risk_score }
   const [chartData, setChartData] = useState({
     temp: [],
     humidity: [],
@@ -51,11 +42,9 @@ export function SensorsProvider({ children }) {
     forge:  'Natężenie światła',
   };
 
-  // ── WebSocket connection ──────────────────────────────────
   useEffect(() => {
     function handleMessage(data) {
       if (data.type === 'history_backfill') {
-        // Backfill from server buffer on connect
         const buckets = { temp: [], humidity: [], light: [], dist: [] };
         for (const pt of data.points) {
           const ts = pt.ts;
@@ -69,7 +58,7 @@ export function SensorsProvider({ children }) {
           }
         }
         setChartData(buckets);
-        // Set KPI from last point
+      
         const last = data.points[data.points.length - 1];
         if (last) applyLatestToKpi(last);
         return;
@@ -78,7 +67,6 @@ export function SensorsProvider({ children }) {
       if (data.type === 'sensor_update') {
         const ts = data.ts;
 
-        // Append to chart buffers
         setChartData(prev => {
           const next = { ...prev };
           for (const metric of ['temp', 'humidity', 'light', 'dist']) {
@@ -89,7 +77,6 @@ export function SensorsProvider({ children }) {
               risk_score: data.risk?.score ?? null,
             };
             const arr = [...prev[metric], point];
-            // Trim to max points
             next[metric] = arr.length > MAX_CHART_POINTS
               ? arr.slice(arr.length - MAX_CHART_POINTS)
               : arr;
@@ -97,7 +84,6 @@ export function SensorsProvider({ children }) {
           return next;
         });
 
-        // Update KPI cards from filtered data
         applyLatestToKpi(data);
       }
 
@@ -122,7 +108,6 @@ export function SensorsProvider({ children }) {
       logBadgeTransitions(nextKpi);
     }
 
-    // Emit a rune-log entry whenever a KPI crosses into a different state bucket.
     function logBadgeTransitions(nextKpi) {
       for (const metric of ['dragon', 'air', 'echo', 'forge']) {
         const newBadge = classifyKpi(metric, nextKpi[metric]);
@@ -199,12 +184,10 @@ export function SensorsProvider({ children }) {
   }, [addEntry]);
 
   const value = {
-    // state
     kpi, atmo, extra, gate, activeTab, connected,
     chartData,
     runeLog: log,
     alertTicker: ticker,
-    // setters / actions
     setActiveTab,
     selectGate,
     addRuneEntry: addEntry,
@@ -214,7 +197,6 @@ export function SensorsProvider({ children }) {
   return <SensorsCtx.Provider value={value}>{children}</SensorsCtx.Provider>;
 }
 
-/** Convenience hook. */
 export function useSensors() {
   const ctx = useContext(SensorsCtx);
   if (!ctx) throw new Error('useSensors must be used within <SensorsProvider>');

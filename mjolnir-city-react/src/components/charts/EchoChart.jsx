@@ -5,7 +5,7 @@ export default function EchoChart() {
   const data = {
     labels: ['Cisza', 'Szept', 'Mowa', 'Ryk bitwy'],
     datasets: [{
-      // TODO(backend): pull distribution from /api/history/echo/distribution
+      
       data: [40, 25, 20, 15],
       backgroundColor: [COLORS.frostSoft, COLORS.teal, COLORS.gold, COLORS.ember],
       borderColor: COLORS.panelBg,

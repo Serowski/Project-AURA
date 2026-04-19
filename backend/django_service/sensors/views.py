@@ -17,7 +17,6 @@ from .models import SensorReading, Alarm
 from .serializers import SensorReadingSerializer, AlarmSerializer
 
 
-# ── Metric field mapping ────────────────────────────────────
 
 METRIC_FIELDS = {
     "temp":     ("raw_temp",     "flt_temp"),
@@ -36,7 +35,6 @@ WINDOW_DELTAS = {
 }
 
 
-# ── Sensor endpoints ────────────────────────────────────────
 
 @api_view(["GET"])
 def sensors_latest(request):
@@ -82,7 +80,7 @@ def sensors_history(request):
 
     raw_field, flt_field = METRIC_FIELDS[metric]
 
-    # Time window filter
+
     delta = WINDOW_DELTAS.get(window)
     qs = SensorReading.objects.all()
 
@@ -93,7 +91,6 @@ def sensors_history(request):
     if device:
         qs = qs.filter(device=device)
 
-    # Order ascending (oldest first) for chart x-axis
     qs = qs.order_by("timestamp")[:limit]
 
     points = []
@@ -128,7 +125,7 @@ def sensors_devices(request):
     return Response({"devices": list(devices)})
 
 
-# ── Alarms ──────────────────────────────────────────────────
+
 
 class AlarmViewSet(viewsets.ModelViewSet):
     """
