@@ -5,7 +5,7 @@ import CityMap from '../charts/CityMap.jsx';
 export default function MapTab() {
   return (
     <Panel
-      title="Strategiczna Mapa Mjölnir City"
+      title="Strategiczna Mapa Kraków AURA"
       subtitle="Rozmieszczenie sensorów, bram i stref zagrożenia"
       className="map-panel"
     >

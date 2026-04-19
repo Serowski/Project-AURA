@@ -107,9 +107,24 @@ export const WindIcon = ({ size = 24, className }) => (
   </svg>
 );
 
+export const DropIcon = ({ size = 24, className }) => (
+  <svg className={className} {...base(size)}>
+    <path d="M12 3c3.5 4.5 6 8 6 11a6 6 0 0 1-12 0c0-3 2.5-6.5 6-11Z" />
+    <path d="M9 14a3 3 0 0 0 3 3" />
+  </svg>
+);
+
 export const EchoIcon = ({ size = 24, className }) => (
   <svg className={className} {...base(size)}>
     <path d="M4 9v6M8 6v12M12 3v18M16 6v12M20 9v6" />
+  </svg>
+);
+
+export const DistanceIcon = ({ size = 24, className }) => (
+  <svg className={className} {...base(size)}>
+    <path d="M3 12h18" />
+    <path d="M3 9v6M21 9v6" />
+    <path d="M7 8l-4 4 4 4M17 8l4 4-4 4" />
   </svg>
 );
 

@@ -1,13 +1,13 @@
 import MetricCard from './MetricCard.jsx';
-import { WindIcon } from '../common/icons.jsx';
+import { DropIcon } from '../common/icons.jsx';
 import { classifyKpi } from '../../utils/thresholdCheck.js';
 
 export default function SpiritOfAirCard({ value }) {
   const badge = classifyKpi('air', value);
   return (
     <MetricCard
-      icon={<WindIcon />}
-      iconColor="var(--teal)"
+      icon={<DropIcon />}
+      iconColor="var(--frost)"
       label="Wilgotność"
       value={value}
       unit="%"

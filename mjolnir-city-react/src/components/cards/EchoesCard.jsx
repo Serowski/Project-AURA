@@ -1,33 +1,22 @@
-import { useMemo } from 'react';
 import MetricCard from './MetricCard.jsx';
-import { EchoIcon } from '../common/icons.jsx';
+import { DistanceIcon } from '../common/icons.jsx';
 import { classifyKpi } from '../../utils/thresholdCheck.js';
 
-/** Mini sparkline rendered under the Echoes value. */
-function EchoSpark({ intensity }) {
-  // memoize so it doesn't flicker on unrelated re-renders
-  const bars = useMemo(
-    () => Array.from({ length: 16 }, () => 3 + Math.round(Math.random() * (intensity / 100) * 18)),
-    [intensity]
-  );
-  return (
-    <div className="spark">
-      {bars.map((h, i) => <i key={i} style={{ height: `${h}px` }} />)}
-    </div>
-  );
-}
+const MAX_DIST_CM = 400; // sensible upper bound for ultrasonic sensor
 
 export default function EchoesCard({ value }) {
-  const badge = classifyKpi('echo', value);
+  const badge = classifyKpi('dist', value);
+  const percent = Math.max(0, Math.min(100, (value / MAX_DIST_CM) * 100));
   return (
     <MetricCard
-      icon={<EchoIcon />}
+      icon={<DistanceIcon />}
       iconColor="var(--frost)"
       label="Odległość"
-      value={value}
+      value={typeof value === 'number' ? value.toFixed(1) : value}
       unit="cm"
       badge={badge}
-      footer={<EchoSpark intensity={value} />}
+      barPercent={percent}
+      barVariant="frost"
     />
   );
 }

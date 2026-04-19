@@ -35,14 +35,6 @@ export default function SensorsTab() {
         <ForgeWisdom />
       </div>
 
-      <Panel
-        title="Rozszerzona Siatka Sensorów"
-        subtitle="Jednostki strażnicze Yggdrasilu · aktualizacja co 3s"
-      >
-        <div className="sensors-grid">
-          {extra.map((s) => <SensorCard key={s.key} sensor={s} />)}
-        </div>
-      </Panel>
     </>
   );
 }

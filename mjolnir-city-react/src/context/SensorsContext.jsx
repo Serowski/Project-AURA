@@ -4,6 +4,7 @@ import { fetchLatestSensors } from '../services/api.js';
 import { openSensorStream } from '../services/sensorStream.js';
 import { useRuneLog } from '../hooks/useRuneLog.js';
 import { useAlarms } from '../hooks/useAlarms.js';
+import { classifyKpi } from '../utils/thresholdCheck.js';
 
 /**
  * Single source of truth for:
@@ -42,6 +43,13 @@ export function SensorsProvider({ children }) {
   const { ticker, fireAlarm, dismiss } = useAlarms({ onLog: addEntry });
 
   const wsRef = useRef(null);
+  const lastBadgesRef = useRef({ dragon: null, air: null, echo: null, forge: null });
+  const METRIC_LABEL = {
+    dragon: 'Temperatura',
+    air:    'Wilgotność',
+    echo:   'Odległość',
+    forge:  'Natężenie światła',
+  };
 
   // ── WebSocket connection ──────────────────────────────────
   useEffect(() => {
@@ -92,16 +100,53 @@ export function SensorsProvider({ children }) {
         // Update KPI cards from filtered data
         applyLatestToKpi(data);
       }
+
+      if (data.type === 'log' || data.type === 'system_log') {
+        addEntry({
+          body: data.message || data.body || JSON.stringify(data.payload || data),
+          tag: data.tag || 'SYSTEM UPDATE',
+          variant: data.variant || data.level || 'info'
+        });
+      }
     }
 
     function applyLatestToKpi(data) {
       const f = data.filtered || data.filtered || {};
-      setKpi({
+      const nextKpi = {
         dragon: f.temp ?? 0,
         air: f.humidity ?? 0,
         echo: f.dist ?? 0,
         forge: f.light ?? 0,
-      });
+      };
+      setKpi(nextKpi);
+      logBadgeTransitions(nextKpi);
+    }
+
+    // Emit a rune-log entry whenever a KPI crosses into a different state bucket.
+    function logBadgeTransitions(nextKpi) {
+      for (const metric of ['dragon', 'air', 'echo', 'forge']) {
+        const newBadge = classifyKpi(metric, nextKpi[metric]);
+        const prev = lastBadgesRef.current[metric];
+        if (prev && prev !== newBadge.label) {
+          addEntry({
+            body: `${METRIC_LABEL[metric]}: ${prev} → ${newBadge.label} (${formatMetricValue(metric, nextKpi[metric])}).`,
+            tag: `SENSOR: ${newBadge.label}`,
+            variant: newBadge.variant,
+          });
+        }
+        lastBadgesRef.current[metric] = newBadge.label;
+      }
+    }
+
+    function formatMetricValue(metric, v) {
+      if (typeof v !== 'number') return String(v);
+      switch (metric) {
+        case 'dragon': return `${v.toFixed(1)}°C`;
+        case 'air':    return `${Math.round(v)}%`;
+        case 'echo':   return `${v.toFixed(1)} cm`;
+        case 'forge':  return `${Math.round(v)} lux`;
+        default:       return String(v);
+      }
     }
 
     const ws = openSensorStream({
@@ -109,10 +154,19 @@ export function SensorsProvider({ children }) {
       onError: (err) => {
         console.warn('WS error:', err);
         setConnected(false);
+        addEntry({
+          body: 'Utracono połączenie ze źródłem danych.',
+          tag: 'LINK: ERROR',
+          variant: 'danger',
+        });
       },
       onClose: () => {
         setConnected(false);
-        // Reconnect after 3 seconds
+        addEntry({
+          body: 'Strumień sensoryczny zamknięty. Próba ponownego połączenia za 3s.',
+          tag: 'LINK: DOWN',
+          variant: 'warn',
+        });
         setTimeout(() => {
           if (wsRef.current) {
             wsRef.current = null;
@@ -123,6 +177,11 @@ export function SensorsProvider({ children }) {
 
     wsRef.current = ws;
     setConnected(true);
+    addEntry({
+      body: 'Połączenie ze strumieniem sensorycznym nawiązane.',
+      tag: 'LINK: UP',
+      variant: 'ok',
+    });
 
     return () => {
       ws.close();

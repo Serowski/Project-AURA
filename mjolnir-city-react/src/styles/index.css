@@ -15,13 +15,24 @@ body,
   height: 100%;
 }
 
+html {
+  background:
+    linear-gradient(180deg, rgba(16, 18, 22, 0.25), rgba(16, 18, 22, 0.45)),
+    url('/images/bg-main-page.jpg') center center / cover no-repeat fixed;
+  background-color: var(--bg-0);
+}
+
 body {
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: radial-gradient(ellipse at top, #0d1320 0%, #05070d 60%, #020307 100%);
+  background: transparent;
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
   letter-spacing: .2px;
+}
+
+#root {
+  background: transparent;
 }
 
 button {
@@ -44,6 +55,28 @@ a {
   grid-template-columns: var(--sidebar-w) 1fr;
   grid-template-rows: var(--topbar-h) 1fr;
   min-height: 100vh;
+  background: transparent;
+}
+
+.topbar,
+.sidebar,
+.main {
+  position: relative;
+  z-index: 2;
+}
+
+.critical-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background: radial-gradient(circle at center, transparent 50%, rgba(227, 89, 77, 0.18) 120%);
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.app--critical-frost .critical-overlay {
+  opacity: 1;
 }
 
 .topbar {
@@ -52,7 +85,9 @@ a {
   align-items: center;
   padding: 0 28px;
   border-bottom: 1px solid var(--line);
-  background: linear-gradient(180deg, #0a111f 0%, #070b14 100%);
+  background: var(--bg-2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: relative;
   z-index: 5;
   overflow: hidden;
@@ -203,7 +238,9 @@ a {
    ============================================================ */
 .sidebar {
   border-right: 1px solid var(--line);
-  background: linear-gradient(180deg, #07101e 0%, #040810 100%);
+  background: var(--bg-2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 26px 0 20px;
   display: flex;
   flex-direction: column;
@@ -371,15 +408,34 @@ a {
   letter-spacing: 4px;
   color: var(--text-xdim);
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 18px;
 }
 
 .page-head h1 {
-  font-size: 30px;
-  letter-spacing: 2px;
+  font-size: 32px;
+  letter-spacing: 3px;
   font-weight: 700;
   text-transform: uppercase;
-  color: #f3f5fa;
+  background: linear-gradient(135deg, #f3e4c0 0%, var(--gold-strong) 40%, var(--amber) 70%, var(--bronze) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 40px rgba(214, 168, 92, 0.35);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+  position: relative;
+  display: inline-block;
+}
+
+.page-head h1::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-strong) 0%, transparent 80%);
+  opacity: 0.8;
 }
 
 .page-head__frost {
@@ -502,7 +558,9 @@ a {
    PANELS (shared card shell)
    ============================================================ */
 .panel {
-  background: linear-gradient(180deg, #101828 0%, #0b1220 100%);
+  background: var(--bg-3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
   padding: 22px;
@@ -622,7 +680,9 @@ a {
 }
 
 .card {
-  background: linear-gradient(180deg, #121a2c 0%, #0c1323 100%);
+  background: var(--bg-3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
   padding: 20px 22px;
@@ -1437,4 +1497,138 @@ a {
     min-height: 200px;
     height: 200px;
   }
+}
+
+/* ============================================================
+   POLISH PASS — glow, hover halos, animated runes
+   ============================================================ */
+
+/* Glow on big numeric values inside KPI cards */
+.card-value,
+.sensor-card__val {
+  text-shadow:
+    0 0 18px rgba(214, 168, 92, 0.18),
+    0 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Animated golden halo on panel/card hover */
+.panel,
+.card {
+  transition: border-color .25s ease, box-shadow .35s ease, transform .25s ease;
+}
+
+.panel:hover,
+.card:hover {
+  border-color: rgba(214, 168, 92, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(214, 168, 92, 0.15),
+    0 14px 38px -18px rgba(214, 168, 92, 0.45),
+    inset 0 1px 0 rgba(214, 168, 92, 0.15);
+}
+
+/* Slow shimmer line traveling across the top of cards on hover */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 40%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 220, 160, 0.9), transparent);
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 1;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%   { left: -40%; }
+  100% { left: 100%; }
+}
+
+/* Make runic corners more visible + animate on hover */
+.runic-corner {
+  opacity: .35;
+  transition: opacity .25s ease, width .25s ease, height .25s ease;
+}
+
+.panel:hover .runic-corner,
+.card:hover .runic-corner,
+.sensor-card:hover .runic-corner {
+  opacity: 1;
+  width: 44px;
+  height: 44px;
+}
+
+/* Brighten active section tab with a soft pulsing aura */
+.sectab.is-active {
+  box-shadow:
+    inset 0 1px 0 rgba(214, 168, 92, .25),
+    0 0 18px -2px rgba(214, 168, 92, .35);
+  animation: tabAura 3.2s ease-in-out infinite;
+}
+
+@keyframes tabAura {
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(214, 168, 92, .25), 0 0 14px -2px rgba(214, 168, 92, .25); }
+  50%      { box-shadow: inset 0 1px 0 rgba(214, 168, 92, .35), 0 0 22px -2px rgba(214, 168, 92, .55); }
+}
+
+/* Gold accent under page header eyebrow */
+.page-head__eyebrow {
+  position: relative;
+  display: block;
+  padding-bottom: 4px;
+}
+
+.page-head__eyebrow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+  opacity: .6;
+}
+
+/* Brand sigil glow */
+.brand__sigil {
+  filter: drop-shadow(0 0 8px rgba(214, 168, 92, 0.45));
+}
+
+/* Topbar gold seam at the bottom */
+.topbar {
+  border-bottom: 1px solid transparent;
+  background-image:
+    linear-gradient(var(--bg-2), var(--bg-2)),
+    linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+/* Soft golden glow under DEGRADING / warn states */
+.page-head__frost .val--warn {
+  text-shadow: 0 0 18px rgba(214, 100, 66, 0.55);
+}
+
+/* Subtle scrollbar polish for the rune log */
+.rune-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--bronze), var(--gold));
+  border-radius: 3px;
+}
+
+/* Smooth fade-in for cards on first paint */
+.card,
+.panel,
+.sensor-card {
+  animation: cardRise .55s ease both;
+}
+
+@keyframes cardRise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
