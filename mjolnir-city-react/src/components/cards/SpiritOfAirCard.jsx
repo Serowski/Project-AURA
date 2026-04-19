@@ -8,9 +8,9 @@ export default function SpiritOfAirCard({ value }) {
     <MetricCard
       icon={<WindIcon />}
       iconColor="var(--teal)"
-      label="Spirit of Air"
+      label="Wilgotność"
       value={value}
-      unit="/100"
+      unit="%"
       badge={badge}
       barPercent={value}
       barVariant="teal"

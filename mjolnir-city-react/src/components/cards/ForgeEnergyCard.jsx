@@ -8,9 +8,9 @@ export default function ForgeEnergyCard({ value }) {
     <MetricCard
       icon={<BoltIcon />}
       iconColor="var(--gold)"
-      label="Forge Energy"
+      label="Natężenie światła"
       value={value}
-      unit="%"
+      unit="lux"
       badge={badge}
       footer={
         <div className="card-sub">

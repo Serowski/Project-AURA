@@ -17,7 +17,7 @@ export default function TopBar() {
 
       <div className="brand">
         <span className="brand__sigil"><HammerSigil /></span>
-        <span className="brand__text">MJÖLNIR CITY</span>
+        <span className="brand__text">AURA KRAKÓW</span>
       </div>
     </header>
   );

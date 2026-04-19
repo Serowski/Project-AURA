@@ -12,7 +12,7 @@ export default function PageHeader() {
         <div className="page-head__eyebrow">
           System Status: <span className="text-ok">Active</span>
         </div>
-        <h1>Mjölnir City Central Hub</h1>
+        <h1>AURA Kraków Central Hub</h1>
       </div>
       <div className="page-head__frost">
         <div className="lbl">Frost Resistance</div>

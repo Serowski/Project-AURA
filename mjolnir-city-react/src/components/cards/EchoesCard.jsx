@@ -23,9 +23,9 @@ export default function EchoesCard({ value }) {
     <MetricCard
       icon={<EchoIcon />}
       iconColor="var(--frost)"
-      label="Echoes of Midgard"
+      label="Odległość"
       value={value}
-      unit="dB"
+      unit="cm"
       badge={badge}
       footer={<EchoSpark intensity={value} />}
     />

@@ -1,6 +1,6 @@
 import Panel from '../common/Panel.jsx';
 import TripleLineChart from '../charts/TripleLineChart.jsx';
-import AtmoChart from '../charts/AtmoChart.jsx';
+import ResonanceChart from '../charts/ResonanceChart.jsx';
 import { useSensors } from '../../context/SensorsContext.jsx';
 
 /**
@@ -13,7 +13,7 @@ export default function ChartsTab() {
   return (
     <div className="charts-grid">
       <Panel
-        title="🌡️ Temperatura — Raw vs Kalman vs AI Risk"
+        title="🌡️ Temperatura "
         subtitle={connected ? '● Live' : '○ Offline'}
         className="chart-panel"
       >
@@ -23,7 +23,7 @@ export default function ChartsTab() {
       </Panel>
 
       <Panel
-        title="💧 Wilgotność — Raw vs Kalman vs AI Risk"
+        title="💧 Wilgotność"
         subtitle={connected ? '● Live' : '○ Offline'}
         className="chart-panel"
       >
@@ -33,7 +33,7 @@ export default function ChartsTab() {
       </Panel>
 
       <Panel
-        title="☀️ Światło — Raw vs Kalman vs AI Risk"
+        title="☀️ Światło "
         subtitle={connected ? '● Live' : '○ Offline'}
         className="chart-panel"
       >
@@ -43,7 +43,7 @@ export default function ChartsTab() {
       </Panel>
 
       <Panel
-        title="📏 Dystans — Raw vs Kalman vs AI Risk"
+        title="📏 Dystans"
         subtitle={connected ? '● Live' : '○ Offline'}
         className="chart-panel"
       >
@@ -52,8 +52,8 @@ export default function ChartsTab() {
         </div>
       </Panel>
 
-      <Panel title="Skład atmosferyczny" className="chart-panel">
-        <div className="chart-wrap"><AtmoChart /></div>
+      <Panel title="AURA Resonance Matrix" className="chart-panel">
+        <div className="chart-wrap"><ResonanceChart /></div>
       </Panel>
     </div>
   );
