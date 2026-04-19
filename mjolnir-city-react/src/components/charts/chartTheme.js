@@ -1,7 +1,4 @@
-/**
- * Shared Chart.js theming (colors, defaults).
- * Imported once in main.jsx-adjacent code, then reused by every chart.
- */
+
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);

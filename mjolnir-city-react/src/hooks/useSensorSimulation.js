@@ -2,21 +2,6 @@ import { useEffect, useRef } from 'react';
 import { fluctuate } from '../utils/fluctuate.js';
 import { THRESHOLDS, TICK_INTERVAL_MS } from '../config/thresholds.js';
 
-/**
- * useSensorSimulation
- *
- * Drives random-walk updates for KPI + extra sensors every
- * TICK_INTERVAL_MS. Also raises alarms when thresholds are crossed.
- *
- * TODO(backend): delete this hook in production and replace with:
- *
- *   useEffect(() => {
- *     const ws = openSensorStream({
- *       onMessage: (msg) => { setKpi(msg.kpi); setAtmo(msg.atmo); ... }
- *     });
- *     return () => ws.close();
- *   }, []);
- */
 export function useSensorSimulation({ setKpi, setAtmo, setExtra, fireAlarm }) {
   // Keep latest refs so the interval callback is stable.
   const fireRef = useRef(fireAlarm);
@@ -31,7 +16,6 @@ export function useSensorSimulation({ setKpi, setAtmo, setExtra, fireAlarm }) {
           echo:   Math.round(fluctuate(prev.echo,   6,   25, 100)),
           forge:  Math.round(fluctuate(prev.forge,  3,   40, 100)),
         };
-        // Evaluate alarms based on the fresh values.
         checkAlarms(next, fireRef.current);
         return next;
       });

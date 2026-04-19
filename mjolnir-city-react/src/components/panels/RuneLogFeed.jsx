@@ -2,7 +2,7 @@ import Panel from '../common/Panel.jsx';
 import { TerminalIcon } from '../common/icons.jsx';
 import { useSensors } from '../../context/SensorsContext.jsx';
 
-/** Scrollable event feed with timestamps + auto-action tags. */
+
 export default function RuneLogFeed() {
   const { runeLog } = useSensors();
 

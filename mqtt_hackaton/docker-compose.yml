@@ -1,25 +1,78 @@
 version: "3.8"
 
 services:
-  # ── MQTT Broker ──────────────────────────────────────────────
-  # Nasłuchuje na 0.0.0.0 → dostępny z każdej maszyny w sieci/VPN
   mosquitto:
     image: eclipse-mosquitto:2.0
     container_name: mqtt-broker
     ports:
-      - "0.0.0.0:1883:1883" # MQTT — dostępny z sieci VPN
-      - "0.0.0.0:9001:9001" # WebSocket — dostępny z sieci VPN
+      - "0.0.0.0:1883:1883"
+      - "0.0.0.0:9001:9001"
     volumes:
-      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
-      - ./mosquitto/data:/mosquitto/data
-      - ./mosquitto/log:/mosquitto/log
+      - ../backend/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ../backend/mosquitto/data:/mosquitto/data
+      - ../backend/mosquitto/log:/mosquitto/log
     restart: unless-stopped
     networks:
       - mqtt-network
 
-  # Publisher nie jest potrzebny — dane przychodzą z zewnętrznego serwera kolegi
 
-  # ── Subscriber (odbiorca wiadomości) ─────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: aura-postgres
+    environment:
+      POSTGRES_DB: aura_db
+      POSTGRES_USER: aura
+      POSTGRES_PASSWORD: aura_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../backend/init_db.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - mqtt-network
+
+
+  fastapi:
+    build:
+      context: ../backend/fastapi_service
+      dockerfile: Dockerfile
+    container_name: aura-fastapi
+    ports:
+      - "8001:8001"
+    environment:
+      - MQTT_BROKER=mosquitto
+      - MQTT_PORT=1883
+      - MQTT_TOPICS=mlottora/#
+      - DATABASE_URL=postgresql+asyncpg://aura:aura_pass@postgres:5432/aura_db
+    depends_on:
+      - mosquitto
+      - postgres
+    restart: unless-stopped
+    networks:
+      - mqtt-network
+
+  django:
+    build:
+      context: ../backend/django_service
+      dockerfile: Dockerfile
+    container_name: aura-django
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_NAME=aura_db
+      - DB_USER=aura
+      - DB_PASSWORD=aura_pass
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DJANGO_DEBUG=True
+      - DJANGO_ALLOWED_HOSTS=*
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - mqtt-network
+
   subscriber:
     build:
       context: .
@@ -29,12 +82,29 @@ services:
     environment:
       - MQTT_BROKER=mosquitto
       - MQTT_PORT=1883
-      - MQTT_TOPICS=mlottora/data,mlottora/raw,mlottora/#
+      - MQTT_TOPICS=mlottora/data,mlottora/raw,mlottora/final
     depends_on:
       - mosquitto
     restart: unless-stopped
     networks:
       - mqtt-network
+
+  frontend:
+    build:
+      context: ../mjolnir-city-react
+      dockerfile: Dockerfile
+    container_name: aura-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - fastapi
+      - django
+    restart: unless-stopped
+    networks:
+      - mqtt-network
+
+volumes:
+  pgdata:
 
 networks:
   mqtt-network:

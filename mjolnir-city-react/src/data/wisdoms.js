@@ -1,4 +1,3 @@
-/** Rotating Viking proverbs used by the "Forge Wisdom" panel. */
 export const WISDOMS = [
   'He who forged the shield of Mjölnir saw the truth in the sparks of the fire.',
   'A wise raven listens twice before it caws once.',

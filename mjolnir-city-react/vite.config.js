@@ -7,10 +7,9 @@ export default defineConfig({
   server: {
     port: 5173,
     open: true,
-    // TODO(backend): proxy to Django/FastAPI during dev
-    // proxy: {
-    //   '/api':  { target: 'http://localhost:8000', changeOrigin: true },
-    //   '/ws':   { target: 'ws://localhost:8001', ws: true },
-    // },
+    proxy: {
+      '/api': { target: 'http://localhost:8000', changeOrigin: true },
+      '/ws':  { target: 'ws://localhost:8001',   ws: true },
+    },
   },
 });

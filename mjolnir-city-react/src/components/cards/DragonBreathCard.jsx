@@ -9,7 +9,7 @@ export default function DragonBreathCard({ value }) {
     <MetricCard
       icon={<DragonIcon />}
       iconColor="var(--gold)"
-      label="Dragon Breath"
+      label="Temperatura"
       value={value.toFixed(1)}
       unit="°C"
       badge={badge}

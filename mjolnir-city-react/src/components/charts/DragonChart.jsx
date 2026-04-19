@@ -7,7 +7,7 @@ export default function DragonChart() {
   const [payload, setPayload] = useState({ labels: [], data: [] });
 
   useEffect(() => {
-    // TODO(backend): pull 24h history from Django
+    
     fetchHistory('dragon').then(setPayload).catch(() => {});
   }, []);
 

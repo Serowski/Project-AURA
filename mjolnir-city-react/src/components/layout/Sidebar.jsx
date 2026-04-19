@@ -5,7 +5,6 @@ import {
 import Warrior from '../pixelart/Warrior.jsx';
 import Runestone from '../pixelart/Runestone.jsx';
 import { useSensors } from '../../context/SensorsContext.jsx';
-import { summonGuard } from '../../services/api.js';
 
 const MENU = [
   { id: 'great-hall', label: 'Great Hall',     Icon: LonghouseIcon },
@@ -15,11 +14,7 @@ const MENU = [
   { id: 'runesmith',  label: 'Runesmith Logs', Icon: ScrollIcon },
 ];
 
-/**
- * Left sidebar — Viking longhall nav + Summon Guard CTA.
- * Includes a pixel-art rune stone near the top and a warrior
- * guarding the Summon button.
- */
+
 export default function Sidebar() {
   const [active, setActive] = useState('great-hall');
   const { addRuneEntry } = useSensors();
@@ -33,7 +28,7 @@ export default function Sidebar() {
       variant: 'ok',
     });
     try {
-      await summonGuard();
+      await new Promise(r => setTimeout(r,400));
     } finally {
       setTimeout(() => setSummoning(false), 900);
     }
@@ -42,11 +37,11 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="side-title">
-        <h2>MJÖLNIR CITY</h2>
-        <p>Digital Longhall</p>
+        <h2></h2>
+        <p></p>
       </div>
 
-      {/* Pixel-art rune stone decorating the sidebar. */}
+      {}
       <div className="sidebar__runestone" aria-hidden>
         <Runestone pixelSize={3} />
       </div>
@@ -64,7 +59,7 @@ export default function Sidebar() {
         ))}
       </ul>
 
-      {/* Warrior + button stack. */}
+      {}
       <div className="sidebar__guard">
         <div className="sidebar__warrior" aria-hidden>
           <Warrior pixelSize={3} />
@@ -75,7 +70,7 @@ export default function Sidebar() {
           className={`summon ${summoning ? 'is-summoning' : ''}`}
           onClick={handleSummon}
         >
-          ⚔ Summon Guard
+          
         </button>
       </div>
     </aside>

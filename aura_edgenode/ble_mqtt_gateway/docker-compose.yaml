@@ -1,0 +1,67 @@
+services:
+  mosquitto:
+    image: docker.io/library/eclipse-mosquitto:latest
+    container_name: local_mqtt
+    ports:
+      - "11883:1883"
+    entrypoint: [ "sh", "-c", "echo 'listener 1883\nallow_anonymous true' > /tmp/mosquitto.conf && mosquitto -c /tmp/mosquitto.conf" ]
+    restart: always
+
+  # sensors chaotic simulation
+  mock-sensors:
+     build: .
+     container_name: mock_sensors
+     network_mode: host
+     command: ["python", "mock_sensors.py"]
+     depends_on:
+       - mosquitto
+     restart: always
+
+  julia-filter:
+    build:
+      context: ../aifiltering
+      dockerfile: Dockerfile
+    container_name: julia_filter
+    restart: always
+    depends_on:
+      - mosquitto
+
+  ai-service:
+    build:
+      context: ../aifiltering/python
+      dockerfile: Dockerfile
+    container_name: ai_service
+    network_mode: host
+    restart: always
+    depends_on:
+      - mosquitto
+      - julia-filter
+
+  ble-collector:
+    build: .
+    container_name: ble_collector
+    network_mode: host
+    privileged: true
+    command: ["python", "ble_collector.py", "--broker", "127.0.0.1", "--port", "11883"]
+    depends_on:
+      - mosquitto
+    restart: always
+    volumes:
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+
+  vpn-uplink:
+    build: .
+    container_name: vpn_uplink
+    network_mode: host
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    command: ["python", "vpn_uplink.py", "--ovpn", "/etc/openvpn/Runner.ovpn", "--local-broker", "127.0.0.1", "--local-port", "11883"]
+    volumes:
+      - ./vpn_config:/etc/openvpn:ro
+    depends_on:
+      - mosquitto
+      - ai-service
+    restart: always

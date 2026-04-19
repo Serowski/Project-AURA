@@ -1,20 +1,16 @@
 import Badge from '../common/Badge.jsx';
 import RunicCorners from '../common/RunicCorner.jsx';
 
-/**
- * Generic KPI card used by the four top metrics.
- * The concrete cards (DragonBreathCard, etc.) just compose this.
- */
 export default function MetricCard({
   icon,
   iconColor = 'var(--gold)',
   label,
   value,
   unit,
-  badge,                    // { label, variant }
-  barPercent,               // 0..100 or undefined
-  barVariant = 'gold',      // 'gold' | 'teal' | 'frost'
-  footer,                   // arbitrary node (sparkline, pulsating core, etc.)
+  badge,                    
+  barPercent,             
+  barVariant = 'gold',    
+  footer,                  
 }) {
   return (
     <article className="card">

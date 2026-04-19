@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { WISDOMS } from '../data/wisdoms.js';
 import { WISDOM_INTERVAL_MS } from '../config/thresholds.js';
 
-/** Rotates through the wisdom list with a fade transition window. */
 export function useWisdomRotator() {
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);

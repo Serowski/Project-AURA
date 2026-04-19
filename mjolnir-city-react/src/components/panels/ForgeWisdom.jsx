@@ -1,11 +1,8 @@
 import Panel from '../common/Panel.jsx';
 import { SparklesIcon } from '../common/icons.jsx';
-import Warrior from '../pixelart/Warrior.jsx';
 import { useWisdomRotator } from '../../hooks/useWisdomRotator.js';
 
-/**
- * Rotating Viking proverb panel flanked by two pixel-art warriors.
- */
+
 export default function ForgeWisdom() {
   const { quote, fade } = useWisdomRotator();
 
@@ -13,7 +10,7 @@ export default function ForgeWisdom() {
     <Panel className="wisdom">
       <div className="wisdom__guards">
         <div className="wisdom__guard wisdom__guard--left" aria-hidden>
-          <Warrior pixelSize={3} />
+          <img src="/images/tung-tung.png" alt="Viking" style={{ maxHeight: '180px', objectFit: 'contain', transform: 'scaleX(-1)' }} />
         </div>
 
         <div className="wisdom__center">
@@ -26,7 +23,7 @@ export default function ForgeWisdom() {
         </div>
 
         <div className="wisdom__guard wisdom__guard--right" aria-hidden>
-          <Warrior pixelSize={3} />
+          <img src="/images/tung-tung.png" alt="Viking" style={{ maxHeight: '180px', objectFit: 'contain', transform: 'scaleX(-1)' }} />
         </div>
       </div>
     </Panel>

@@ -34,7 +34,6 @@ class MQTTClient:
         self.client.on_message = self._on_message
         self.client.on_disconnect = self._on_disconnect
 
-    # ── Callback handlers ─────────────────────────────────────
 
     def _on_connect(self, client, userdata, flags, reason_code, properties):
         if reason_code == 0:
@@ -61,7 +60,6 @@ class MQTTClient:
     def _on_disconnect(self, client, userdata, flags, reason_code, properties):
         print(f"⚠️  [{self.client_id}] Rozłączono (kod: {reason_code})")
 
-    # ── Public API ────────────────────────────────────────────
 
     def connect(self):
         """Nawiąż połączenie z brokerem."""
@@ -104,7 +102,6 @@ class MQTTClient:
         print(f"🛑 [{self.client_id}] Rozłączono.")
 
 
-# ── Przykład użycia ───────────────────────────────────────────
 if __name__ == "__main__":
     def handle_message(topic: str, payload):
         print(f"📥 [{topic}] → {payload}")
