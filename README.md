@@ -1,8 +1,8 @@
-# Project AURA — Mjölnir City
+# Project AURA - Anomaly-driven Urban Risk Analyzer
 
 > Viking-themed real-time environmental dashboard. Multi-sensor MQTT stream, FastAPI bridge, React frontend.
 
-AURA (Autonomous Urban Resonance Analyzer) zbiera dane z sensorów IoT rozmieszczonych w Krakowie, filtruje je, klasyfikuje ryzyko i podaje ops-teamowi jako żywy dashboard w stylu nordyckiego command-center.
+AURA (Anomaly-driven Urban Risk Analyzer) zbiera dane z sensorów IoT rozmieszczonych w Krakowie, filtruje je, klasyfikuje ryzyko i podaje ops-teamowi jako żywy dashboard w stylu nordyckiego command-center.
 
 ---
 
