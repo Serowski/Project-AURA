@@ -1,0 +1,43 @@
+# Security & Credentials
+*.ovpn
+*.crt
+*.key
+*.pem
+*.p12
+*.conf
+.env
+secrets.json
+vpn_config/
+vpn_config/*
+Runner.ovpn
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+dist/
+build/
+*.egg-info/
+
+# Julia
+Manifest.toml
+*.jl.cov
+*.jl.mem
+
+# Zephyr / Embedded
+build/
+nrf_bme280_spi/build/
+*.elf
+*.bin
+*.hex
+*.uf2
+*.map
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

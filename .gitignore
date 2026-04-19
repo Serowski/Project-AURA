@@ -1,0 +1,38 @@
+  *.ovpn
+  *.crt
+  *.key
+  *.pem
+  *.p12
+  *.conf
+  .env
+  secrets.json
+  Runner.ovpn
+
+  __pycache__/
+  *.py[cod]
+  *$py.class
+  venv/
+  .venv/
+  env/
+  dist/
+  build/
+  *.egg-info/
+
+  Manifest.toml
+  *.jl.cov
+  *.jl.mem
+
+  build/
+  nrf_bme280_spi/build/
+  *.elf
+  *.bin
+  *.hex
+  *.uf2
+  *.map
+
+  nrf_bme280_spi/
+  nrf_bme280_spi/*
+  .vscode/
+  .idea/
+  .DS_Store
+  Thumbs.db
