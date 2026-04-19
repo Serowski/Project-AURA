@@ -5,7 +5,6 @@ import {
 import Warrior from '../pixelart/Warrior.jsx';
 import Runestone from '../pixelart/Runestone.jsx';
 import { useSensors } from '../../context/SensorsContext.jsx';
-import { summonGuard } from '../../services/api.js';
 
 const MENU = [
   { id: 'great-hall', label: 'Great Hall',     Icon: LonghouseIcon },
@@ -33,7 +32,7 @@ export default function Sidebar() {
       variant: 'ok',
     });
     try {
-      await summonGuard();
+      await new Promise(r => setTimeout(r,400));
     } finally {
       setTimeout(() => setSummoning(false), 900);
     }

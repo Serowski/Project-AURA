@@ -4,9 +4,8 @@ import SpiritOfAirCard from '../cards/SpiritOfAirCard.jsx';
 import EchoesCard from '../cards/EchoesCard.jsx';
 import ForgeEnergyCard from '../cards/ForgeEnergyCard.jsx';
 import SensorCard from '../cards/SensorCard.jsx';
-import HeatmapPanel from '../panels/HeatmapPanel.jsx';
+import ResonanceChart from '../charts/ResonanceChart.jsx';
 import RuneLogFeed from '../panels/RuneLogFeed.jsx';
-import AtmosphericComposition from '../panels/AtmosphericComposition.jsx';
 import ForgeWisdom from '../panels/ForgeWisdom.jsx';
 import Panel from '../common/Panel.jsx';
 
@@ -24,23 +23,18 @@ export default function SensorsTab() {
       </div>
 
       <div className="row-2">
-        <HeatmapPanel />
+        <Panel title="AURA Resonance Matrix" subtitle="Bieżący profil sieci sensorycznej" className="chart-panel">
+          <div className="chart-wrap chart-wrap--tall" style={{ minHeight: '380px' }}>
+            <ResonanceChart />
+          </div>
+        </Panel>
         <RuneLogFeed />
       </div>
 
       <div className="row-bot">
-        <AtmosphericComposition />
         <ForgeWisdom />
       </div>
 
-      <Panel
-        title="Rozszerzona Siatka Sensorów"
-        subtitle="Jednostki strażnicze Yggdrasilu · aktualizacja co 3s"
-      >
-        <div className="sensors-grid">
-          {extra.map((s) => <SensorCard key={s.key} sensor={s} />)}
-        </div>
-      </Panel>
     </>
   );
 }

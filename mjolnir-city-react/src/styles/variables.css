@@ -3,36 +3,36 @@
    =========================================================== */
 :root {
   /* surfaces */
-  --bg-0: #05070d;
-  --bg-1: #0b111c;
-  --bg-2: #11192a;
-  --bg-3: #151f33;
+  --bg-0: #101216;
+  --bg-1: transparent;
+  --bg-2: rgba(27, 30, 36, 0.55);
+  --bg-3: rgba(34, 38, 45, 0.5);
 
   /* lines */
-  --line:   #1e2a42;
-  --line-2: #26324c;
+  --line: #2d333b;
+  --line-2: #3a424e;
 
   /* text */
-  --text:      #e6e9ef;
-  --text-dim:  #8b95ab;
-  --text-xdim: #5d6780;
+  --text: #dedede;
+  --text-dim: #9aa0a6;
+  --text-xdim: #6c737a;
 
   /* accents */
-  --gold:        #d6a85c;
-  --gold-strong: #e7ba66;
-  --amber:       #f0c277;
-  --bronze:      #a16b36;
-  --teal:        #4fb8b0;
-  --teal-dim:    #2d7d78;
-  --ember:       #e06a3a;
-  --frost:       #7fb6d9;
-  --violet:      #8779d6;
-  --danger:      #e3594d;
-  --ok:          #4fb889;
+  --gold: #d1aa73;
+  --gold-strong: #e5b974;
+  --amber: #f0c587;
+  --bronze: #9c6c40;
+  --teal: #5ab2b4;
+  --teal-dim: #327072;
+  --ember: #d66442;
+  --frost: #7fb6d9;
+  --violet: #8779d6;
+  --danger: #d9584e;
+  --ok: #5fab87;
 
   /* layout */
-  --sidebar-w: 260px;
-  --topbar-h:  72px;
+  --sidebar-w: 0px;
+  --topbar-h: 72px;
 
   /* radii */
   --r-sm: 4px;
