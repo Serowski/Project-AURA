@@ -5,6 +5,7 @@ import { Line } from 'react-chartjs-2';
 import { COLORS, axisGrid } from './chartTheme.js';
 import { useSensors } from '../../context/SensorsContext.jsx';
 import { fetchSensorHistory } from '../../services/api.js';
+import { calculateMovingAverage } from '../../utils/smoothData.js';
 
 const WINDOWS = ['live', '5m', '15m', '1h', '6h', '24h'];
 
@@ -83,15 +84,17 @@ export default function TripleLineChart({ metric = 'temp' }) {
       return d.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     });
 
+    const smoothedFilteredData = calculateMovingAverage(points.map((p) => p.filtered), 3);
+
     return {
       labels,
       datasets: [
         {
           label: `Kalman (${config.unit})`,
-          data: points.map((p) => p.filtered),
+          data: smoothedFilteredData,
           borderColor: config.color,
           backgroundColor: config.bg,
-          tension: 0.4,
+          tension: 0.6,
           fill: true,
           pointRadius: 0,
           borderWidth: 2.5,
@@ -103,7 +106,7 @@ export default function TripleLineChart({ metric = 'temp' }) {
           data: points.map((p) => p.risk_score),
           borderColor: COLORS.danger || '#e3594d',
           backgroundColor: 'rgba(227,89,77,.1)',
-          tension: 0.3,
+          tension: 0.6,
           fill: false,
           pointRadius: 0,
           borderWidth: 1.5,
@@ -173,6 +176,9 @@ export default function TripleLineChart({ metric = 'temp' }) {
           text: `${config.label} (${config.unit})`,
           color: '#8b95ab',
           font: { size: 11 },
+        },
+        ticks: {
+          stepSize: metric === 'temp' ? 0.5 : undefined,
         },
       },
       yRisk: {
